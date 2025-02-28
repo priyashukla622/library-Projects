@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Member Details</title>
+</head>
+<style>
+    header h1{
+        text-align: center;
+    }
+    #updateMember h2{
+        text-align: center;
+        text-decoration: underline;
+    }
+    section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: white;
+    }
+    label{
+        font-weight: bold;
+    }
+    
+    button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #45a049;
+    }
+    form {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Form labels */
+    form label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    form input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+    form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    form button:hover {
+        background-color: #45a049;
+    }
+    #responseMessage {
+        margin-top: 20px;
+        font-size: 22px;
+        color: #d9534f;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+<body>
+    <header>
+        <h1>Update Member Details</h1>
+    </header>
+        <section id="updateMember">
+            <h2>Update Member</h2>
+            <form id="updateForm">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter Email" required />
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter Username" required />
+                <label for="contact">Contact Number</label>
+                <input type="text" id="contact" name="contact" placeholder="Enter Contact" required />
+                <button type="submit">Update Member</button>
+            </form>
+            <p id="responseMessage"></p>
+        </section>
+    <script>
+        document.getElementById("updateForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const data = {
+                email: document.getElementById("email").value,
+                username: document.getElementById("username").value,
+                contact: document.getElementById("contact").value
+            };
+            try {
+                const response = await fetch("http://localhost:3000/users/updateUser", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    document.getElementById("responseMessage").textContent = result.message;
+                } else {
+                    document.getElementById("responseMessage").textContent = result.message || "Something went wrong!";
+                }
+            } catch (error) {
+                document.getElementById("responseMessage").textContent = "Error during member update: " + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

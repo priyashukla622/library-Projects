@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Book</title>
+</head>
+<style>
+    h1{
+        text-align: center;
+    }
+    h2{
+        text-align: center;
+        margin-top: -15px;
+    }
+    button{
+        background-color:#4CAF50;
+        color:white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover{
+        background-color:#4CAF50;
+        color:white;
+    }
+    form{
+        max-width: 500px;
+        border-radius: 8px;
+        padding: 20px;
+        margin:auto;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    form input{
+        width:100%;
+        border:1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 12px;
+        padding: 7px;
+        margin: 5px 0;
+    }
+    form button{
+        width:100%;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+    section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: white;
+    }
+    label{
+        font-weight: bold;
+    }
+    #responseMessage {
+        margin-top: 20px;
+        font-size: 23px;
+        color: #d9534f;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+<body>
+    <h1>Library Management System Issue Book In library</h1>
+    <section>
+        <form id="issueBookForm">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="emial" placeholder="Enter the Email" required/>
+            <label for="contact">Contact Number</label>
+            <input type="text" id="contact" placeholder="Contact Number" required />
+            <label for="bookTitle">Book Title</label>
+            <input type="text" id="bookTitle" name="bookTitle" placeholder="Enter Book Title" required />
+            <label for="bookAuthor">Book Author</label>
+            <input type="text" id="bookAuthor" name="bookAuthor" placeholder="Enter Author Name" required />
+            <label for="bookPublish">Book Publish</label>
+            <input type="text" id="bookPublish" name="bookPublish" placeholder="Enter Publish Name" required />
+            <label for="bookPrice">Book Price</label>
+            <input type="number" id="bookPrice" name="bookPrice" placeholder="Enter Price" required />
+            <select id="bookLanguage" required>
+                <option value="" disabled selected>Select Language</option>
+                <option value="Hindi">Hindi</option>
+                <option value="English">English</option>
+                <option value="Urdu">Urdu</option>
+                <option value="French">French</option>
+            </select>
+            <button type="button" onclick="issueBookForm(event)">Issue Book</button>
+        </form>
+        <p id="responseMessage"></p>
+    </section>
+    <script>
+       const message=document.getElementById("responseMessage")
+       async function issueBookForm(e){
+        e.preventDefault();
+        const data={
+            email:document.getElementById("email").value,
+            contact:document.getElementById("contact").value,
+            authorName:document.getElementById("bookAuthor").value,
+            title:document.getElementById("bookTitle").value,
+            publish:document.getElementById("bookPublish").value,
+            price:document.getElementById("bookPrice").value,
+            language:document.getElementById("bookLanguage").value
+        };
+        try{
+            const response=await fetch("http://localhost:3000/users/issueBooks",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify(data)
+
+            });
+            const result=await response.json()
+            if (response.ok) {
+                message.textContent = result.message;
+            } else {
+                message.textContent = result.message || "Something went wrong!";
+            }
+        }
+        catch (err) {
+            message.textContent = "Error during book addition: " + err.message;
+            console.log(err);
+        }
+       }
+    </script>
+</body>
+</html>

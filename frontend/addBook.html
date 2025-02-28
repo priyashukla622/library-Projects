@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book</title>
+</head>
+<style>
+* {
+    box-sizing: border-box; 
+}
+body, html {
+    height: 100%; 
+    margin: 0; 
+    padding: 0; 
+    overflow: auto; 
+}
+
+h1 {
+    text-align: center;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+    color: white;
+}
+
+h2 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+form {
+    max-width: 500px;
+    border-radius: 8px;
+    padding:5px;
+    margin: auto;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+form input {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 10px;
+    margin: 10px 0;
+}
+form button {
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+label {
+    font-weight: bold; 
+    text-decoration-color: black; 
+}
+section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: white;
+}
+
+#responseMessage {
+    margin-top: 20px;
+    font-size: 23px;
+    color: #d9534f;
+    font-weight: bold;
+    text-align: center;
+}
+</style>
+<body>
+    <header>
+        <h1>Library Management System Add Book In library</h1>
+    </header>
+    <main>
+        <section id="addBook">
+            <form id="addBookForm">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Email" required />
+                <label for="bookTitle">Book Title</label>
+                <input type="text" id="bookTitle" name="bookTitle" placeholder="Enter Book Name" required />
+                <label for="bookAuthor">Book Author</label>
+                <input type="text" id="bookAuthor" name="bookAuthor" placeholder="Enter Author Name" required />
+                <label for="bookPublish">Book Publish</label>
+                <input type="text" id="bookPublish" name="bookPublish" placeholder="Enter Publish Name" required />
+                <label for="bookPrice">Price</label>
+                <input type="number" id="bookPrice" name="bookPrice" placeholder="Enter Price" required />
+                <select id="bookLanguage" required>
+                    <option value="" disabled selected>Select Language</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="English">English</option>
+                    <option value="Urdu">Urdu</option>
+                    <option value="French">French</option>
+                </select>
+                <button type="button" onclick="addBookForms(event)">Add Book</button>
+            </form>
+            <p id="responseMessage"></p>
+        </section>
+    </main>
+    <script>
+        const message = document.getElementById("responseMessage");
+        async function addBookForms(e) {
+            e.preventDefault(); 
+        
+            const token = localStorage.getItem('authToken');
+            console.log("Token from localStorage:", token); 
+
+            if (!token) {const token = localStorage.getItem('authToken');
+            console.log("Token from localStorage:", token); 
+
+                message.textContent = "No token provided. Please log in first.";
+                return;
+            }
+            const data = {
+                email: document.getElementById("email").value,
+                title: document.getElementById("bookTitle").value,
+                authorName: document.getElementById("bookAuthor").value,
+                publish: document.getElementById("bookPublish").value,
+                price: document.getElementById("bookPrice").value,
+                language: document.getElementById("bookLanguage").value
+            };
+            try {
+                const response = await fetch("http://localhost:3000/users/addBook", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}` 
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+        
+                if (response.ok) {
+                    message.textContent = result.message;
+                    document.getElementById("addBookForm").reset(); 
+                } else {
+                    message.textContent = result.message || "Something went wrong!";
+                }
+            } catch (err) {
+              
+                message.textContent = "Error during book addition: " + err.message;
+                console.log(err);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Book</title>
+</head>
+<style>
+    h1{
+        text-align: center;
+    }
+    h2{
+        text-align: center;
+        text-decoration: underline;
+    }
+    button{
+        background-color:#4CAF50;
+        color:white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover{
+        background-color:#4CAF50;
+        color:white;
+    }
+    section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: white;
+    }
+    form{
+        max-width: 500px;
+        border-radius: 8px;
+        padding: 20px;
+        margin:50px auto;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    form input{
+        width:100%;
+        border:1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    form button{
+        width:100%;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+    label{
+        font-weight: bold;
+    }
+    #responseMessage {
+        margin-top: 20px;
+        font-size: 23px;
+        color: #d9534f;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+<body>
+    <h1>Book Delete  by Title</h1>
+    <main>
+        <section>
+            <h2>Delete Book</h2>
+            <form id="deleteMemberForm">
+                <label for="emailmail">Email</label>
+                <input type="email" id="email" placeholder="Email" required />
+                <label for="deleteBook">Delete Book</label>
+                <input type="text" id="deleteBook" value="" name="bookTitle" placeholder="Enter the book name" required />
+                <button type="submit" onclick="deleteBookForm(event)">Delete Book</button>
+            </form>
+            <p id="responseMessage"></p>
+        </section>
+    </main>
+    <script>
+        const message=document.getElementById("responseMessage");
+        async function deleteBookForm(e) {
+            e.preventDefault();
+            let email = document.getElementById("email").value;
+            let bookTitle = document.getElementById("deleteBook").value;
+            const token = localStorage.getItem('authToken');
+            console.log("Token from localStorage:", token); 
+
+            if (!token) {const token = localStorage.getItem('authToken');
+            console.log("Token from localStorage:", token); 
+
+                message.textContent = "No token provided. Please log in first.";
+                return;
+            }
+            try {
+                const response = await fetch("http://localhost:3000/users/deleteBook", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${token}` 
+                    },
+                    body: JSON.stringify({ email: email, title: bookTitle }) 
+                });
+                const result = await response.json();  
+                if (response.ok) {
+                    message.textContent = result.message;
+                    console.log(result.message);
+                } else {
+                    message.textContent = result.message || "Something went wrong!";
+                }
+            } catch (error) {
+                console.error("Error during book deletion:", error);
+                message.textContent = "Error during book deletion: " + error.message;
+            }
+        }
+        
+    </script>
+</body>
+</html>

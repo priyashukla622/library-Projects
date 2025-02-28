@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 80px;
+        } button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>You are logged in</h1>
+    <button id="logoutButton">Logout</button>
+    <script>
+        document.getElementById("logoutButton").onclick = function () {
+            localStorage.removeItem('authToken');
+            alert("You have been logged out successfully!");
+            window.location.href = "index.html";
+        };
+    </script>
+</body>
+</html>

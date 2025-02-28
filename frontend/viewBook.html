@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Book</title>
+</head>
+<style>
+    h1 {
+        text-align: center;
+    }
+    form {
+        max-width: 500px;
+        margin: 10px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Form labels */
+    form label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    
+    /* Form input fields */
+    form input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+    
+    /* Form button styling */
+    form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+    }
+    
+    /* Button hover effect */
+    form button:hover {
+        background-color: #45a049;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #45a049;
+    }
+    h2{
+        text-align: center;
+    }
+    section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: white;
+    }
+    h2{
+        text-align: center;
+        text-decoration: underline;
+    }
+    ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+    
+    
+</style>
+<body>
+    <h1>Search Book by Title</h1>
+    <main>
+        <section>
+            <h2>View Book</h2>
+            <form id="search-form">
+                <label for="bookTitle">Book Title</label>
+                <input type="text" id="bookTitle" name="bookTitle" placeholder="Enter the book title" required />
+                <button type="submit" onclick="searchBooks(event)">View Book</button>
+            </form>
+        </section>
+        <ul id="book-details"></ul>
+    </main>
+    <script>
+        async function searchBooks(e) {
+            e.preventDefault(); 
+            const title = document.getElementById('bookTitle').value;
+            try {
+                const response = await fetch(`http://localhost:3000/users/viewBook?title=${encodeURIComponent(title)}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const books = await response.json();
+                const bookDetailsElement = document.getElementById('book-details');
+                bookDetailsElement.innerHTML = '';
+
+                if (books && books.length > 0) {
+                    books.forEach(book => {
+                        const bookItem = document.createElement('li');
+                        bookItem.innerHTML = `
+                            <strong>Title:</strong> ${book.title} <br>
+                            <strong>Author Name:</strong> ${book.authorName} <br>
+                            <strong>Publish:</strong> ${book.publish} <br>
+                            <strong>Price:</strong> ${book.price} <br>
+                            <strong>Language:</strong> ${book.language} <br><br>
+                        `;
+                        bookDetailsElement.appendChild(bookItem);
+                    });
+                } else {
+                    bookDetailsElement.innerHTML = 'No books found with the given title';
+                }
+            } catch (error) {
+                console.error('Error fetching books:', error);
+                document.getElementById('book-details').textContent = 'Failed to load book details';
+            }
+        }
+    </script>
+</body>
+</html>

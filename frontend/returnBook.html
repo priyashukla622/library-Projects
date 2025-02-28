@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Book</title>
+</head>
+<style>
+    h1{
+        text-align: center;
+    }
+    h2{
+        text-align: center;
+        text-decoration: underline;
+    }
+    button{
+        background-color:#4CAF50;
+        color:white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover{
+        background-color:#4CAF50;
+        color:white;
+    }
+    form{
+        max-width: 500px;
+        border-radius: 8px;
+        padding: 20px;
+        margin:20px auto;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: white;
+    }
+    form input{
+        width:100%;
+        border:1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    form button{
+        width:100%;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+    label {
+        font-weight: bold; 
+        text-decoration-color: black; 
+    }
+    #responseMessage {
+        margin-top: 20px;
+        font-size: 23px;
+        color: #d9534f;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+<body>
+    <h1>Library Management System - Return Book</h1>
+    <main>
+        <section>
+            <h2>Return Book</h2>
+            <form id="returnBookForm">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter the Email" required/>
+                <label for="contact">Contact</label>
+                <input type="text" id="contact" name="contact" placeholder="Enter Contact" required/>
+                <label for="bookTitle">Book Title</label>
+                <input type="text" id="bookTitle" name="bookTitle" placeholder="Enter Book Title" required/>
+                <button type="button" onclick="returnBookForm(event)">Return Book</button>
+            </form>
+            <p id="responseMessage"></p>
+        </section>
+    </main>
+    <script>
+        const message = document.getElementById("responseMessage");
+
+        async function returnBookForm(e) {
+            e.preventDefault();
+            const data = {
+                email: document.getElementById("email").value,
+                contact: document.getElementById("contact").value,
+                title: document.getElementById("bookTitle").value
+            };
+            try {
+                const response = await fetch("http://localhost:3000/users/returnBook", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    message.textContent = result.message;
+                } else {
+                    message.textContent = result.message || "Something went wrong!";
+                }
+            } catch (err) {
+                message.textContent = "Error during book return: " + err.message;
+                console.log(err);
+            }
+        }
+    </script>
+</body>
+</html>

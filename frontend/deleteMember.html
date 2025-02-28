@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Member</title>
+</head>
+<style>
+    h1{
+        text-align: center;
+    }
+    h2{
+        text-align: center;
+        text-decoration: underline;
+    }
+    button{
+        background-color: #4CAF50;
+        border: none;
+        cursor: pointer;
+        color: white;
+        padding: 10px;
+    }
+    button:hover{
+        background-color: #4CAF50;
+    }
+    form{
+        max-width: 500px;
+        background-color:#fff;
+        margin: 50px auto;
+        padding:20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);;
+    }
+    form input{
+        width:100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+    form button{
+        width: 100%;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    form label {
+        display: block;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: white;
+    }
+    #responseMessage {
+        margin-top: 20px;
+        font-size: 16px;
+        color: #d9534f;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+<body>
+    <header>
+        <h1>Library Management System Member Delete  by Username</h1>
+    </header>
+    <main>
+        <section id="addMember">
+            <h2>Add Member</h2>
+            <form id="deleteMemberForm">
+                <label for="deleteUsername">Username</label>
+                <input type="text" id="deleteUsername" value="" name="username" placeholder="Enter the name" required />
+                <button type="submit" onclick="deleteMemberForms(event)">Delete Member</button>
+            </form>
+            <p id="responseMessage"></p>
+        </section>
+    </main>
+    <script>
+        const message = document.getElementById("responseMessage");
+        async function deleteMemberForms(e) {
+            e.preventDefault();
+            let username = document.getElementById("deleteUsername").value;
+            try {
+                const response = await fetch("http://localhost:3000/users/deleteUser", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({ username: username })  
+                });
+        
+                const result = await response.json();
+        
+                const message = document.getElementById("responseMessage");
+        
+                if (response.ok) {
+                    message.textContent = result.message;
+                } else {
+                    message.textContent = result.message || "Something went wrong!";
+                }
+            } catch (error) {
+                console.error("Error during member deletion:", error);
+                message.textContent = "Error during member deletion: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

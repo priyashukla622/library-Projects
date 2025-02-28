@@ -1,0 +1,308 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    height: 100%; 
+    margin-left:3px;
+    margin-right:3px;
+}
+
+.navbar {
+    background-color: #fff;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 10; 
+}
+
+img {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+}
+.header {
+    background-image: url("https://www.datocms-assets.com/29926/1602789304-footer-bg.png?h=472&w=1440");
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 20px; 
+    width: 100%;
+    position: relative;
+    z-index: 5; 
+    border-bottom:2px solid #fff ;
+}
+.header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 5px 5px; 
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.header a:hover {
+    color: white;
+}
+.header a:active {
+    color: #ff5733; 
+    text-decoration: underline;
+}
+
+#divs{   
+    background-image: url("https://img.freepik.com/premium-photo/library-with-large-book-shelf-full-books_1316263-127103.jpg");      
+    background-size: cover; 
+    object-fit: cover;
+    object-position: center;
+    height:90vh; 
+    width:100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+}  
+footer{
+    margin-top:1px ;
+}
+.foot-panel{
+    background-color: #37475a;  
+    color:white;
+    height: 50px;
+    display:flex;
+   
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.85rem;
+}
+.foot-panel2{
+    background-color:#222f3d;  
+    color: white;
+    height:300px;
+    display:flex;
+    justify-content:space-evenly;
+
+}
+.links a {
+    text-decoration: none;
+}
+.links a i {
+    margin-right: 10px; 
+}
+.head a{
+    line-height: 1.5; 
+    display: block;
+}
+.head  h3 i {
+    font-size: 18px; 
+    color:white;     
+    margin-right: 10px;
+}
+.pages a i {
+    font-size: 15px; 
+    color: white;  
+    margin-left: 4px; 
+    transform: rotate(-90deg);
+}
+.pages a{
+    color: white;  
+    text-decoration: none;
+}
+
+ul{
+    margin-top: 50px;
+}
+ul a{
+    display:block;
+    font-size: 0.85rem;
+    margin-top:10px ;
+    color:#dddddd;
+}
+.foot-panel3{
+    background-color: #222f3d;
+    color: white;
+    border-top: 0.5px solid white;
+    height:70px;
+    display: flex;
+    justify-content: center;
+}
+.foot-panel4{
+    background-color: #0f1111;
+    color: white;
+    height:80px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.pages{
+    padding:20px ;
+
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .menu-bar {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .menu-links {
+    display: flex;
+    gap: 10px;
+  }
+.menu-links a{
+        color: black;
+        text-decoration: none;
+        margin: 0 10px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        font-size: 20px;
+}
+    
+.menu-links a:hover {
+    background-color: #555;
+    color: white;
+}
+
+
+  
+  /* Mobile Responsive */
+@media (max-width: 768px) {
+    .menu-bar {
+      display: block; 
+    }
+  
+    .menu-links {
+      display: none; 
+    }
+  
+    .menu-links.active {
+      display: flex; 
+      flex-direction: column;
+    }
+  }
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+    .navbar img {
+        width: 80%;
+        max-width: 120px;
+    }
+    /* Header adjustments */
+    .header {
+        flex-direction: column;
+        padding: 20px 10px;
+        text-align: center;
+    }
+    .header a {
+        font-size: 16px;
+        padding: 5px 10px;
+    }
+
+    /* Divs background image adjustments */
+    #divs {
+        height: 60vh;
+    }
+    #divs h1 {
+        font-size: 35px;
+    }
+
+    /* Footer adjustments */
+    .foot-panel {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    .foot-panel2 {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .links a, .head a {
+        font-size: 0.85rem;
+        margin-top: 8px;
+    }
+
+    .pages {
+        padding: 10px 0;
+        text-align: center;
+    }
+}
+
+/* Styles for very small screens (phones in portrait mode) */
+@media screen and (max-width: 480px) {
+    body, html {
+        font-size: 14px;
+    }
+
+    /* Navbar */
+    .navbar {
+        padding: 15px 5px;
+    }
+    nav a {
+        font-size: 16px;
+        margin: 5px 0;
+        padding: 8px;
+    }
+
+    /* Header */
+    .header {
+        padding: 15px 5px;
+        font-size: 14px;
+    }
+    .header a {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+
+    /* Div background image */
+    #divs {
+        height: 50vh;
+    }
+
+    #divs h1 {
+        font-size: 30px;
+    }
+
+    /* Footer */
+    .foot-panel2, .foot-panel3 {
+        padding: 15px;
+        text-align: center;
+    }
+    .foot-panel2 {
+        flex-direction: column;
+    }
+
+    .foot-panel3 {
+        padding: 10px;
+    }
+    
+    .pages {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .head, .links, ul {
+        font-size: 0.75rem;
+        margin-top: 10px;
+    }
+}
+

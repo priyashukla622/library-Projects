@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Book</title>
+</head>
+<style>
+    h1{
+        text-align: center;
+    }
+    h2{
+        text-align: center;
+        text-decoration: underline;
+    }
+    button{
+        background-color:#4CAF50;
+        color:white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
+    label{
+        font-weight: bold;
+    }
+    button:hover{
+        background-color:#4CAF50;
+        color:white;
+    }
+    form{
+        max-width: 500px;
+        border-radius: 8px;
+        padding: 20px;
+        margin:auto;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    form input{
+        width:100%;
+        border:1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    form button{
+        width:100%;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+    section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: white;
+    }
+    #responseMessage {
+        margin-top: 20px;
+        font-size: 23px;
+        color: #d9534f;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+<body>
+    <header>
+        <h1>Library Management System Update Book In Library</h1>
+    </header>
+        <section id="updateBook">
+            <h2>Update Book</h2>
+            <form id="memberForm">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Email" required />
+                <label for="editTitle">Book Title</label>
+                <input type="text" id="editTitle" name="bookTitle" placeholder="Enter the book title" required />
+                <label for="editAuthor">Book Author</label>
+                <input type="text" id="editAuthor" name="bookAuthor" placeholder="Enter the book author" required />
+                <label for="editPublish">Book Publish</label>
+                <input type="text" id="editPublish" name="bookPublish" placeholder="Enter Publish Name" required />
+                <label for="editPrice">Book Price</label>
+                <input type="number" id="editPrice" name="bookPrice" placeholder="Enter Price" required />
+                <button type="submit" onclick="updateBookForm(event)">Update Book</button>
+            </form>
+            <p id="responseMessage"></p>
+        </section>
+    <script>
+        const message = document.getElementById("responseMessage");
+        async function updateBookForm(e) {
+            e.preventDefault();
+            const token = localStorage.getItem('authToken');
+            console.log("Token from localStorage:", token); 
+
+            if (!token) {const token = localStorage.getItem('authToken');
+            console.log("Token from localStorage:", token); 
+
+                message.textContent = "No token provided. Please log in first.";
+                return;
+            }
+            const data = {
+                email:document.getElementById("email").value,
+                title: document.getElementById("editTitle").value,
+                authorName: document.getElementById("editAuthor").value,
+                publish: document.getElementById("editPublish").value,
+                price: document.getElementById("editPrice").value,
+            };
+            try {
+                const response = await fetch("http://localhost:3000/users/updateBook", {
+                    method: "PUT",  
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    message.textContent = result.message;
+                } else {
+                    message.textContent = result.message || "Something went wrong!";
+                }
+            } catch (err) {
+                message.textContent = "Error during book update: " + err.message;
+                console.log(err);
+            }
+        }
+    </script>
+</body>
+</html>
