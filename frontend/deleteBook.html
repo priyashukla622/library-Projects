@@ -81,8 +81,7 @@
         </section>
     </main>
     <script>
-        const message=document.getElementById("responseMessage");
-        let backendUrl="https://library-projects.onrender.com"
+        const message=document.getElementById("responseMessage")
         async function deleteBookForm(e) {
             e.preventDefault();
             let email = document.getElementById("email").value;
@@ -97,7 +96,7 @@
                 return;
             }
             try {
-                const response = await fetch(`${backendUrl}/users/deleteBook`, {
+                const response = await fetch(`https://library-projects.onrender.com/users/deleteBook`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
