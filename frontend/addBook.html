@@ -113,6 +113,7 @@ section {
     </main>
     <script>
         const message = document.getElementById("responseMessage");
+        let backendUrl="https://library-projects.onrender.com"
         async function addBookForms(e) {
             e.preventDefault(); 
         
@@ -134,7 +135,7 @@ section {
                 language: document.getElementById("bookLanguage").value
             };
             try {
-                const response = await fetch("http://localhost:3000/users/addBook", {
+                const response = await fetch(`${backendUrl}/users/addBook`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

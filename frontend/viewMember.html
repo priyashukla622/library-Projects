@@ -91,11 +91,12 @@
     </section>
     <ul id="member-details"></ul>
     <script>
+         let backendUrl="https://library-projects.onrender.com"
         async function searchMember(e) {
             e.preventDefault(); 
             const email = document.getElementById('email-input').value;
             try {
-                const response = await fetch(`http://localhost:3000/users/viewUser?email=${encodeURIComponent(email)}`);
+                const response = await fetch(`${backendUrl}/users/viewUser?email=${encodeURIComponent(email)}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

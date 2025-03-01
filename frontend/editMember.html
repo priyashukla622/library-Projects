@@ -102,13 +102,14 @@
     <script>
         document.getElementById("updateForm").addEventListener("submit", async function(e) {
             e.preventDefault();
+            let backendUrl="https://library-projects.onrender.com"
             const data = {
                 email: document.getElementById("email").value,
                 username: document.getElementById("username").value,
                 contact: document.getElementById("contact").value
             };
             try {
-                const response = await fetch("http://localhost:3000/users/updateUser", {
+                const response = await fetch(`${backendUrl}/users/updateUser`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"

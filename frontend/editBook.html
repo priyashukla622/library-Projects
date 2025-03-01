@@ -88,6 +88,7 @@
         </section>
     <script>
         const message = document.getElementById("responseMessage");
+        let backendUrl="https://library-projects.onrender.com"
         async function updateBookForm(e) {
             e.preventDefault();
             const token = localStorage.getItem('authToken');
@@ -107,7 +108,7 @@
                 price: document.getElementById("editPrice").value,
             };
             try {
-                const response = await fetch("http://localhost:3000/users/updateBook", {
+                const response = await fetch(`${backendUrl}/users/updateBook`, {
                     method: "PUT",  
                     headers: {
                         "Content-Type": "application/json",

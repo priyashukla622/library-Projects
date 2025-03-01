@@ -103,11 +103,12 @@
         <ul id="book-details"></ul>
     </main>
     <script>
+        let backendUrl="https://library-projects.onrender.com"
         async function searchBooks(e) {
             e.preventDefault(); 
             const title = document.getElementById('bookTitle').value;
             try {
-                const response = await fetch(`http://localhost:3000/users/viewBook?title=${encodeURIComponent(title)}`);
+                const response = await fetch(`${backendUrl}users/viewBook?title=${encodeURIComponent(title)}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

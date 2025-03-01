@@ -84,11 +84,12 @@
     </main>
     <script>
         const message = document.getElementById("responseMessage");
+        let backendUrl="https://library-projects.onrender.com"
         async function deleteMemberForms(e) {
             e.preventDefault();
             let username = document.getElementById("deleteUsername").value;
             try {
-                const response = await fetch("http://localhost:3000/users/deleteUser", {
+                const response = await fetch(`${backendUrl}/users/deleteUser`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",

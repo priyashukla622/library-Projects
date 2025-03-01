@@ -98,6 +98,7 @@
     </main>
     <script>
         const message=document.getElementById("responseMessage");
+        let backendUrl="https://library-projects.onrender.com"
         async function memberForms(e) {
             e.preventDefault();
             const username = document.getElementById("username").value;
@@ -131,7 +132,7 @@
                 contact
             };
             try {
-                const response = await fetch("http://localhost:3000/users/addUser", {
+                const response = await fetch(`${backendUrl}/users/addUser`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

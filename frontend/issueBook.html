@@ -94,6 +94,7 @@
     </section>
     <script>
        const message=document.getElementById("responseMessage")
+       let backendUrl="https://library-projects.onrender.com"
        async function issueBookForm(e){
         e.preventDefault();
         const data={
@@ -106,7 +107,7 @@
             language:document.getElementById("bookLanguage").value
         };
         try{
-            const response=await fetch("http://localhost:3000/users/issueBooks",{
+            const response=await fetch(`${backendUrl}/users/issueBooks`,{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
