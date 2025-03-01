@@ -14,13 +14,13 @@ const port = process.env.PORT ||4000;
 mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 30000, // 30 seconds
+  serverSelectionTimeoutMS: 30000, 
 })
-
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
    mongoose.set("bufferCommands", false);
 
+   
 app.use(cors());
 app.use(express.json());
 
